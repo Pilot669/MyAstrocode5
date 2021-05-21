@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
 
-        <TableLayout
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/costom_forecast">
 
-            <include
-                layout="@layout/parent_item_3233"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+        <include
+            layout="@layout/parent_item_3233"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-         </TableLayout>
+    </TableLayout>
 
 </TableLayout>
