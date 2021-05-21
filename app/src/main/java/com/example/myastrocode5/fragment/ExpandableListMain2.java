@@ -30,7 +30,6 @@ public class ExpandableListMain2 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.grouprow, container, false);
         return view;
-
     }
 
 
@@ -38,13 +37,9 @@ public class ExpandableListMain2 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         final ArrayList<ExpandableListMain2.Parent> dummyList = buildDummyData();
-        // Adding ArrayList data to ExpandableListView values
         loadHosts(dummyList);
     }
-
-
 
     private ArrayList<ExpandableListMain2.Parent> buildDummyData() {
         // Creating ArrayList of type parent class to store parent class objects
@@ -78,192 +73,217 @@ public class ExpandableListMain2 extends Fragment {
         return list;
     }
 
-    private void loadHosts(final ArrayList<ExpandableListMain2.Parent> newParents) {
+    private void loadHosts(final ArrayList<Parent> newParents)
+    {
         if (newParents == null)
             return;
         parents = newParents;
 
 
         // Check for ExpandableListAdapter object
-        if (this.getExpandableListAdapter() == null) {
+        if (this.getExpandableListAdapter() == null)
+        {
             //Create ExpandableListAdapter Object
-            final ExpandableListMain2.MyExpandableListAdapter mAdapter = new ExpandableListMain2.MyExpandableListAdapter();
+            final MyExpandableListAdapter mAdapter = new MyExpandableListAdapter();
 
             // Set Adapter to ExpandableList Adapter
-            this.setListAdapter();
-        } else {
+            this.setListAdapter(mAdapter);
+        }
+        else
+        {
             // Refresh ExpandableListView data
-            ((ExpandableListMain2.MyExpandableListAdapter) getExpandableListAdapter()).notifyDataSetChanged();
+            ((MyExpandableListAdapter)getExpandableListAdapter()).notifyDataSetChanged();
         }
     }
-
     private Object getExpandableListAdapter() {
-
         return null;
     }
 
-    private void setListAdapter() {
+    private void setListAdapter(MyExpandableListAdapter mAdapter) {
 
     }
 
 
-    private class MyExpandableListAdapter extends BaseExpandableListAdapter {
+    private class MyExpandableListAdapter extends BaseExpandableListAdapter
+    {
 
-    private final LayoutInflater inflater;
 
-    public MyExpandableListAdapter() {
-        // Create Layout Inflator
-        inflater = LayoutInflater.from(ExpandableListMain2.this.getContext());
-    }
-    // This Function used to inflate parent rows view
+        private final LayoutInflater inflater;
 
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parentView) {
-        final ExpandableListMain2.Parent parent = parents.get(groupPosition);
+        public MyExpandableListAdapter()
+        {
+            // Create Layout Inflator
+            inflater = LayoutInflater.from(ExpandableListMain2.this.getContext());
+        }
 
-        // Inflate grouprow.xml file for parent rows
-        convertView = inflater.inflate(R.layout.grouprow, parentView, false);
 
-        // Get grouprow.xml file elements and set values
-        ((TextView) convertView.findViewById(R.id.textgroup)).setText(parent.getText1());
+        // This Function used to inflate parent rows view
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.image);
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parentView)
+        {
+            final Parent parent = parents.get(groupPosition);
 
-        return convertView;
-    }
+            // Inflate grouprow.xml file for parent rows
+            convertView = inflater.inflate(R.layout.grouprow, parentView, false);
 
-    // This Function used to inflate child rows view
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                             View convertView, ViewGroup parentView) {
-        final ExpandableListMain2.Parent parent = parents.get(groupPosition);
-        final ExpandableListMain2.Child child = parent.getChildren().get(childPosition);
+            // Get grouprow.xml file elements and set values
+            ((TextView) convertView.findViewById(R.id.textgroup)).setText(parent.getText1());
 
-        // Inflate childrow.xml file for child rows
-        convertView = inflater.inflate(R.layout.childrow, parentView, false);
+            ImageView image=(ImageView)convertView.findViewById(R.id.image);
 
-        // Get childrow.xml file elements and set values
-        return convertView;
-    }
+            return convertView;
+        }
 
-    @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return parents.get(groupPosition).getChildren().get(childPosition);
-    }
 
-    //Call when child row clicked
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
-    }
+        // This Function used to inflate child rows view
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                                 View convertView, ViewGroup parentView)
+        {
+            final Parent parent = parents.get(groupPosition);
+            final Child child = parent.getChildren().get(childPosition);
 
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        int size = 0;
-        if (parents.get(groupPosition).getChildren() != null)
-            size = parents.get(groupPosition).getChildren().size();
-        return size;
-    }
+            // Inflate childrow.xml file for child rows
+            convertView = inflater.inflate(R.layout.childrow, parentView, false);
 
-    @Override
-    public Object getGroup(int groupPosition) {
-        return parents.get(groupPosition);
-    }
+//             Get childrow.xml file elements and set values
+//            ((TextView) convertView.findViewById(R.id.text1)).setText(child.getText1());
+            return convertView;
+        }
 
-    @Override
-    public int getGroupCount() {
-        return parents.size();
-    }
 
-    //Call when parent row clicked
-    @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
-    }
+        @Override
+        public Object getChild(int groupPosition, int childPosition)
+        {
+            //Log.i("Childs", groupPosition+"=  getChild =="+childPosition);
+            return parents.get(groupPosition).getChildren().get(childPosition);
+        }
 
-    @Override
-    public void notifyDataSetChanged() {
-        // Refresh List rows
-        super.notifyDataSetChanged();
-    }
+        //Call when child row clicked
+        @Override
+        public long getChildId(int groupPosition, int childPosition)
+        {
+            return childPosition;
+        }
 
-    @Override
-    public boolean isEmpty() {
-        return ((parents == null) || parents.isEmpty());
-    }
+        @Override
+        public int getChildrenCount(int groupPosition)
+        {
+            int size=0;
+            if(parents.get(groupPosition).getChildren()!=null)
+                size = parents.get(groupPosition).getChildren().size();
+            return size;
+        }
 
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
-    }
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
+        @Override
+        public Object getGroup(int groupPosition)
+        {
+            return parents.get(groupPosition);
+        }
 
-    @Override
-    public boolean areAllItemsEnabled() {
-        return true;
-    }
+        @Override
+        public int getGroupCount()
+        {
+            return parents.size();
+        }
 
-}
+        //Call when parent row clicked
+        @Override
+        public long getGroupId(int groupPosition)
+        {
+            return groupPosition;
+        }
 
-public class Child {
-    private String name;
-    private String text1;
+        @Override
+        public void notifyDataSetChanged()
+        {
+            // Refresh List rows
+            super.notifyDataSetChanged();
+        }
 
-    public String getName() {
-        return name;
-    }
+        @Override
+        public boolean isEmpty()
+        {
+            return ((parents == null) || parents.isEmpty());
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition)
+        {
+            return true;
+        }
 
-    public String getText1() {
-        return text1;
-    }
+        @Override
+        public boolean hasStableIds()
+        {
+            return true;
+        }
 
-    public void setText1(String text1) {
-        this.text1 = text1;
-    }
+        @Override
+        public boolean areAllItemsEnabled()
+        {
+            return true;
+        }
 
-}
-
-public class Parent {
-
-    private String name;
-    private String text1;
-
-    // ArrayList to store child objects
-    private ArrayList<ExpandableListMain2.Child> children;
-
-    public String getName() {
-        return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public class Child {
+        private String name;
+        private String text1;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getText1() {
+            return text1;
+        }
+
+        public void setText1(String text1) {
+            this.text1 = text1;
+        }
+
     }
 
-    public String getText1() {
-        return text1;
-    }
+    public class Parent {
 
-    public void setText1(String text1) {
-        this.text1 = text1;
-    }
+        private String name;
+        private String text1;
 
-    // ArrayList to store child objects
-    public ArrayList<ExpandableListMain2.Child> getChildren() {
-        return children;
-    }
+        // ArrayList to store child objects
+        private ArrayList<ExpandableListMain2.Child> children;
 
-    public void setChildren(ArrayList<ExpandableListMain2.Child> children) {
-        this.children = children;
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getText1() {
+            return text1;
+        }
+
+        public void setText1(String text1) {
+            this.text1 = text1;
+        }
+
+        // ArrayList to store child objects
+        public ArrayList<ExpandableListMain2.Child> getChildren() {
+            return children;
+        }
+
+        public void setChildren(ArrayList<ExpandableListMain2.Child> children) {
+            this.children = children;
+        }
     }
-}
 
 }
