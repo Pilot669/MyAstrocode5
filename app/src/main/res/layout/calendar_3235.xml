@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/costom_forecast">
 
-    <ImageButton
-        android:id="@+id/calendar"
+    <android.widget.ImageButton
+        android:id="@+id/button_calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="304dp"
         android:layout_marginLeft="304dp"
         android:layout_marginTop="10dp"
         android:background="@color/black"
+        android:onClick="btn_calendar"
         android:src="@drawable/ic_calendar" />
 
     <include
@@ -48,7 +49,7 @@
         android:layout_marginBottom="66dp"
         android:background="@drawable/costom_btn"
         android:text="Подробнее"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/white" />
 
     <Button

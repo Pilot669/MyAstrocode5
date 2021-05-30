@@ -1,19 +1,25 @@
 package com.example.myastrocode5.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myastrocode5.MainActivity;
 import com.example.myastrocode5.R;
 
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ public class ExpandableListMain2 extends Fragment {
     ExpandableListView lv;
     private String[] groups;
     private String[][] children;
-
+    ImageButton btn;
 
     public ExpandableListMain2() {
 
@@ -39,14 +45,28 @@ public class ExpandableListMain2 extends Fragment {
                 {""},
                 {""}
         };
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_lineup, container, false);
 
+//        btn = (ImageButton) rootView.findViewById(R.id.imageButton2);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "You Clicked the button!", Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
         return rootView;
+
+
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -55,6 +75,7 @@ public class ExpandableListMain2 extends Fragment {
         lv = (ExpandableListView) view.findViewById(R.id.expListView);
         lv.setAdapter(new ExpandableListAdapter(groups, children));
         lv.setGroupIndicator(null);
+
 
     }
 
@@ -154,4 +175,6 @@ public class ExpandableListMain2 extends Fragment {
             TextView text;
         }
     }
+
+
 }
