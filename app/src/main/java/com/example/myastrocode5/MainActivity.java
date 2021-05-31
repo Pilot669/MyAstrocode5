@@ -20,6 +20,7 @@ import com.example.myastrocode5.fragment.ExpandableListMain2;
 import com.example.myastrocode5.fragment.MyDialogFragment;
 
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -67,4 +68,26 @@ public class MainActivity extends AppCompatActivity {
         DialogFragment fragment = new MyDialogFragment();
         fragment.show(getSupportFragmentManager(), "date picker");
     }
+
+    public enum Day {
+        Ночь,Утро,День,Вечер
+    }
+
+    public enum Month {
+        День, Неделя, Две_недели, Месяц
+    }
+
+
+    public enum Period {
+        Day, Month
+    }
+
+    public void configure (Date date, Period period){
+        switch (period){
+            case Day:
+
+                break;
+        }
+    }
+
 }
